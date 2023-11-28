@@ -14,16 +14,14 @@ function getDateDetails(date) {
   // Якщо date не є об'єктом Date, повертаємо рядок
   // "Помилка: вхідне значення має бути об'єктом Date"
   // Повертаємо об'єкт, що містить деякі деталі про вхідний об'єкт Date.
-  let objDate = {};
-
   if (typeof date.getTime() === "function") {
     return "Помилка: вхідне значення має бути об'єктом Date";
   } else {
-    objDate["year"] = date.getFullYear();
-    objDate["month"] = date.getMonth();
-    objDate["day"] = date.getDate();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
 
-    return objDate;
+    return { year, month, day };
   }
 }
 
@@ -159,19 +157,15 @@ function nextNewYear() {
 
   let dateNext = new Date(Date.UTC(yearNext, 0, 1));
 
-  const dateNow2 = Date.parse(dateNow);
-  const dateNext2 = Date.parse(dateNext);
+  const diff = dateNext.getTime() - dateNow.getTime();
 
-  const diff = dateNext2 - dateNow2;
+  const days = diff / (1000 * 60 * 60 * 24);
+  const hours = (diff / (1000 * 60 * 60)) % 24;
+  const minutes = (diff / (1000 * 60)) % 60;
+  const seconds = (diff / 1000) % 60;
+  const milliseconds = diff % 1000;
 
-  let obj = {};
-  obj["days"] = diff / (1000 * 60 * 60 * 24);
-  obj["hours"] = (diff / (1000 * 60 * 60)) % 24;
-  obj["minutes"] = (diff / (1000 * 60)) % 60;
-  obj["seconds"] = (diff / 1000) % 60;
-  obj["milliseconds"] = diff % 1000;
-
-  return obj;
+  return { days, hours, minutes, seconds, milliseconds };
 }
 
 console.log("Завдання:5  ==============================");
@@ -237,8 +231,6 @@ function addDays(date, days) {
   // Додавання заданої кількості днів до дати.
   // Збереження результуючої дати для виведення в форматі ISO.
   // Повертаємо об'єкт з початковою датою, кількістю доданих днів та результуючою датою.
-  let obj = {};
-
   if (typeof date.getTime() === "function") {
     return "Помилка: вхідне значення має бути об'єктом Date";
   } else if (typeof days !== "number") {
@@ -251,11 +243,11 @@ function addDays(date, days) {
 
     const dataIso2 = date.toISOString();
 
-    obj["inputDate"] = dataIso1;
-    obj["addedDays"] = days;
-    obj["resultDate"] = dataIso2;
+    const inputDate = dataIso1;
+    const addedDays = days;
+    const resultDate = dataIso2;
 
-    return obj;
+    return { inputDate, addedDays, resultDate };
   }
 }
 
@@ -299,8 +291,6 @@ function getDayOfWeek(date) {
   // Отримання дня тижня як числа (0 - неділя, 1 - понеділок, ..., 6 - субота).
   // Отримання назви дня тижня з масиву daysOfWeek за індексом.
   // Повертаємо об'єкт з початковою датою та днем тижня.
-  let obj = {};
-
   if (typeof date.getTime() === "function") {
     return "Помилка: вхідне значення має бути об'єктом Date";
   } else {
@@ -310,10 +300,10 @@ function getDayOfWeek(date) {
 
     const dayName = daysOfWeek[day];
 
-    obj["inputDate"] = dateIso;
-    obj["dayOfWeek"] = dayName;
+    const inputDate = dateIso;
+    const dayOfWeek = dayName;
 
-    return obj;
+    return { inputDate, dayOfWeek };
   }
 }
 
@@ -345,8 +335,6 @@ function getDaysInMonth(date) {
   // Віднімання одного дня від наступного місяця, щоб отримати останній день поточного місяця.
   // Отримання числа останнього дня поточного місяця - це кількість днів у місяці.
   // Повертаємо об'єкт з початковою датою та кількістю днів у місяці.
-  let obj = {};
-
   if (typeof date.getTime() === "function") {
     return "Помилка: вхідне значення має бути об'єктом Date";
   } else {
@@ -360,10 +348,10 @@ function getDaysInMonth(date) {
 
     const dayLast = date2.getDate();
 
-    obj["inputDate"] = dateIso;
-    obj["daysInMonth"] = dayLast;
+    const inputDate = dateIso;
+    const daysInMonth = dayLast;
 
-    return obj;
+    return { inputDate, daysInMonth };
   }
 }
 console.log("Завдання: 9 ==============================");
@@ -393,8 +381,6 @@ function getFormattedTime(date) {
   // Отримання секунд.
   // Форматування часу у вигляді 'гг:хх:сс', ${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}.
   // Повертаємо об'єкт з початковою датою та отформатованим часом.
-  let obj = {};
-
   if (typeof date.getTime() === "function") {
     return "Помилка: вхідне значення має бути об'єктом Date";
   } else {
@@ -407,10 +393,10 @@ function getFormattedTime(date) {
       .toString()
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
-    obj["inputDate"] = dateIso;
-    obj["formattedTime"] = format;
+    const inputDate = dateIso;
+    const formattedTime = format;
 
-    return obj;
+    return { inputDate, formattedTime };
   }
 }
 console.log("Завдання: 10 ==============================");
